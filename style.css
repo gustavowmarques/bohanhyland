@@ -1,6 +1,12 @@
-.navbar-custom {
-    background-color: rgb(33, 67, 156) !important;
+body {
+    background-color: #f8f9fa; /* Light gray background */
 }
+
+.navbar-custom {
+    background-color: #222222; /* Dark navbar */
+}
+
 .footer-custom {
-    background-color: rgb(33, 67, 156) !important;
+    background-color: #222222; /* Dark footer */
+    color: white;
 }
