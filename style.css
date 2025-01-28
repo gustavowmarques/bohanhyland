@@ -3,10 +3,28 @@ body {
 }
 
 .navbar-custom {
-    background-color: #222222; /* Dark navbar */
+    background-color: rgb(33, 67, 156); /* Matching background color of the logo */
+}
+
+.navbar-custom .nav-link {
+    color: #ffffff !important; /* Make links white for better visibility */
+    font-weight: bold;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #f8d210 !important; /* Highlight color on hover */
 }
 
 .footer-custom {
-    background-color: #222222; /* Dark footer */
+    background-color: rgb(33, 67, 156); /* Footer matches navbar color */
     color: white;
+}
+
+.form-header-buttons {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-header-buttons .btn {
+    margin: 0 10px;
 }
