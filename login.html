@@ -6,12 +6,10 @@
     <title>Bohan Hyland - Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-
 </head>
 <body>
-
-     <!-- Navigation Bar -->
-     <nav class="navbar navbar-expand-lg navbar-custom py-3">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="Images/logo.png" alt="Logo" width="70" height="40" class="me-2">
@@ -48,7 +46,6 @@
         </div>
     </nav>
     
-
     <!-- Login Section -->
     <section class="py-5">
         <div class="container">
@@ -56,7 +53,7 @@
                 <a href="login.html" class="btn btn-primary">Login</a>
                 <a href="register.html" class="btn btn-light">Register</a>
             </div>
-            <form class="bg-white p-4 shadow-sm rounded mx-auto" style="max-width: 400px;">
+            <form id="authForm" class="bg-white p-4 shadow-sm rounded mx-auto" style="max-width: 400px;">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" required>
@@ -69,10 +66,17 @@
                     <input type="checkbox" class="form-check-input" id="showPassword">
                     <label class="form-check-label" for="showPassword">Show Password</label>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="button" onclick="login()" class="btn btn-primary w-100">Login</button>
+                
             </form>
+            <p id="message" class="text-center mt-3"></p>
         </div>
     </section>
+
+    <!-- Logout Button -->
+    <div id="logoutSection" class="text-center py-3" style="display: none;">
+        <button onclick="logout()" class="btn btn-danger">Logout</button>
+    </div>
 
     <!-- Footer -->
     <footer class="footer-custom py-4">
@@ -87,6 +91,45 @@
             const passwordField = document.getElementById('password');
             passwordField.type = this.checked ? 'text' : 'password';
         });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("loggedIn") === "true") {
+                window.location.href = "membersPortal.html";
+            }
+        });
+
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            
+            if (email && password) {
+                const storedPassword = localStorage.getItem(email);
+                
+                if (storedPassword === password) {
+                    localStorage.setItem("loggedIn", "true");
+                    displayMessage("Login successful! Redirecting...");
+                    setTimeout(() => {
+                        window.location.href = "membersPortal.html";
+                    }, 1000);
+                } else {
+                    displayMessage("Invalid email or password.");
+                }
+            } else {
+                displayMessage("Please fill in all fields.");
+            }
+        }
+
+        function logout() {
+            localStorage.setItem("loggedIn", "false");
+            displayMessage("You have logged out.");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1000);
+        }
+
+        function displayMessage(message) {
+            document.getElementById("message").textContent = message;
+        }
     </script>
 </body>
 </html>
