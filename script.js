@@ -57,4 +57,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("message").textContent = message;
   }
 
-  
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("Back to Top script loaded"); // Debugging check
+
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (!backToTopBtn) {
+        console.error("Error: #backToTopBtn not found!"); // Debugging
+        return;
+    }
+
+    // Show the button when scrolling past 300px
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    });
+
+    // Scroll smoothly to the top when clicking the button
+    backToTopBtn.addEventListener("click", function () {
+        console.log("Button clicked - Scrolling to top");
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
