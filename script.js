@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Script loaded successfully"); // Debugging check
-  if (typeof bootstrap !== "undefined") {
-    console.log("Bootstrap is loaded!");
-} else {
-    console.error("Bootstrap is NOT loaded! The navbar might be affected.");
-}
+//   console.log("Script loaded successfully"); // Debugging check
+//   if (typeof bootstrap !== "undefined") {
+//     console.log("Bootstrap is loaded!");
+// } else {
+//     console.error("Bootstrap is NOT loaded! The navbar might be affected.");
+// }
 
-// Ensure navbar elements exist
-const navbar = document.querySelector(".navbar");
-if (navbar) {
-    console.log("Navbar found in DOM.");
-} else {
-    console.error("Navbar NOT found in DOM.");
-}
+// // Ensure navbar elements exist
+// const navbar = document.querySelector(".navbar");
+// if (navbar) {
+//     console.log("Navbar found in DOM.");
+// } else {
+//     console.error("Navbar NOT found in DOM.");
+// }
 
   // === User Authentication Logic ===
   if (localStorage.getItem("loggedIn") === "true") {

@@ -70,7 +70,7 @@ main {
 }
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-* { box-sizing: border-box; }
+ { box-sizing: border-box; }
 
 ::placeholder {
   font-size: small;
@@ -86,15 +86,13 @@ html, body {
 
 body {
   font-family: 'Lato', sans-serif;
-  display: flex;
   flex-direction: column;
   height: 100vh;
   align-items: center;
   justify-content: center;
   background-size: cover;
   padding: 0 15px;
-  background-color: #f8f9fa; /* Light gray background */
-}
+  background-color: #f8f9fa; 
 
 a {
   text-decoration: none;
@@ -114,122 +112,88 @@ a {
   }
 }
 
+.mortgage-result {
+    font-size: 1.2rem;
+    color: #20c997;
+}
+
+/*#mortgage-final-result {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #007bff; Bootstrap primary color for emphasis */
+    /* background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px; */
+}
+
+
 .mortgage-form-wrapper {
-    background-image: url('Images/background.jpg'); /* Adjusted path */
+    background-image: url('Images/background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 30px 30px 0;
+    padding: 30px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     min-width: 420px;
-  }
-  
-  /* Responsive Design */
-  @media screen and (max-width: 480px) {
-    .mortgage-form-wrapper {
-      min-width: 0;
-      width: 100%;
-    }
-  }
-  
-  h1 { margin: 0 0 15px; }
-  input {
-    transition: all .5s ease;
-    &[type="number"] {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      width: 100%;
-      font-size: small;
-      padding: 11px;
-      &:invalid {
-        background-color: rgba(lightcoral,.075);
-        border: 1px solid lightcoral;
-        outline: none;
-      }
-      &:empty {
-        background-color: white;
-        border: 1px solid #ddd;
-      }
-      &:valid {
-        background-color: rgba(lightseagreen,.075);
-        border: 1px solid lightseagreen;
-        outline: none;
-      }
-      &.error {
-        background-color: rgba(lightcoral,.075);
-        border: 1px solid lightcoral;
-        outline: none;
-        &:valid {
-          background-color: rgba(lightseagreen,.075);
-          border: 1px solid lightseagreen;
-          outline: none;
-        }
-      }
-    }
-  }
-  p { margin: 0 0 15px; }
-  label { display: block; }
 }
 
 .mortgage-form {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Slight transparency for better contrast */
+    padding: 30px;
     border-radius: 10px;
-    color: white;
 }
 
-p.motgage-result {
-  margin: 0 0 15px;
-  .error-message {
-    color: lightcoral;
-    font-weight: 700;
-  }
-  .success-message {
-    color: lightseagreen;
-    font-weight: 700;
-  }
+.mortgage-form--row {
+    margin-bottom: 15px;
 }
 
 .mortgage-form--help {
-  font-size: small;
-  font-style: italic;
-  color: #a9a9a9;
-  text-align: right;
+    font-size: small;
+    font-style: italic;
+    color: #a9a9a9;
+    text-align: right;
 }
 
-.mortgage-form--row__button-wrapper {
-  text-align: center;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
-  button {
-    border: none;
-    background-color: lightcoral;
+.mortgage-form--row__button-wrapper button {
+    width: 150px;
+    margin: 5px;
+}
+
+.mortgage-form--row__button-wrapper .btn {
     padding: 12px 20px;
-    color: white;
     font-weight: 700;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease;
-    outline: 2px solid lightcoral;
-    margin: 0 7.5px;
-    &:hover, &:focus {
-      background-color: #666;
-      outline: 2px solid #666;
-    }
-    &.form-success,
-    &.disabled {
-      background-color: #a9a9a9;
-      outline: 2px solid #a9a9a9;
-      cursor: not-allowed;
-      &:hover, &:focus {
-        background-color: #a9a9a9;
-        outline: 2px solid #a9a9a9;
-      }
-    }
-  }
 }
 
-.reset-btn { display: none; }
+.mortgage-form--row__button-wrapper .btn:hover {
+    opacity: 0.8;
+}
+
+.reset-btn {
+    display: none;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .mortgage-form-wrapper .container {
+        padding: 15px; /* Add padding to prevent edges from being too close */
+    }
+
+    .mortgage-form {
+        padding: 20px;
+    }
+
+    .mortgage-form--row__button-wrapper button {
+        width: 100%; /* Buttons will take up the full width */
+        margin: 10px 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .mortgage-form-wrapper .container {
+        padding: 10px; /* More padding adjustments for very small screens */
+    }
+}
