@@ -172,3 +172,53 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Mortgage calculator not found on this page. Skipping initialization.");
     }
 });
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function addToCart(id, name, price) {
+    let product = cart.find(item => item.id === id);
+    
+    if (product) {
+        product.quantity += 1;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+}
+
+function displayCart() {
+    let cartItems = document.getElementById("cart-items");
+    let cartTotal = document.getElementById("cart-total");
+    
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.innerHTML = `${item.name} - €${item.price} x ${item.quantity} 
+                        <button onclick="removeFromCart(${item.id})">Remove</button>`;
+        cartItems.appendChild(li);
+        total += item.price * item.quantity;
+    });
+
+    cartTotal.textContent = total;
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+    alert("Proceeding to checkout...");
+    // Here, you would normally send the cart data to a server for payment processing.
+}
+
+document.addEventListener("DOMContentLoaded", displayCart);
