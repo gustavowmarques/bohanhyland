@@ -192,6 +192,10 @@ function displayCart() {
     let cartItems = document.getElementById("cart-items");
     let cartTotal = document.getElementById("cart-total");
     
+    if (!cartItems || !cartTotal){
+        console.warn("Cart elements not found on this page. Skipping displayCart().");
+        return;
+    }
     cartItems.innerHTML = "";
     let total = 0;
 
