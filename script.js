@@ -45,9 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         window.addEventListener("scroll", function () {
             if (window.scrollY > 300) {
-                backToTopBtn.style.display = "block";
+                backToTopBtn.classList.add("show");
             } else {
-                backToTopBtn.style.display = "none";
+                backToTopBtn.classList.remove("show");
             }
         });
 

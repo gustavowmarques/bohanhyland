@@ -48,7 +48,7 @@ main {
     background: none;
     border: none;
     cursor: pointer;
-    display: none !important; /* Ensures it remains hidden until scrolling */
+    display: none;
     transition: opacity 0.3s ease-in-out;
     z-index: 1000;
 }
@@ -67,6 +67,7 @@ main {
 /* Ensure visibility when scrolling */
 .back-to-top.show {
     display: block !important;
+    opacity: 1;
 }
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
@@ -116,17 +117,6 @@ a {
     font-size: 1.2rem;
     color: #20c997;
 }
-
-/*#mortgage-final-result {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: #007bff; Bootstrap primary color for emphasis */
-    /* background-color: #f8f9fa;
-    border-radius: 5px;
-    padding: 20px;
-    margin-top: 20px; */
-}
-
 
 .mortgage-form-wrapper {
     background-image: url('Images/background.jpg');
