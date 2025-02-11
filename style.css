@@ -202,33 +202,28 @@ a {
 .hero {
     position: relative;
     width: 100%;
-    height: 70vh; /* Reduce height to 70% of the screen */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
+    height: 70vh;
     overflow: hidden;
 }
 
 /* Carousel */
-.hero .carousel {
+/* .hero .carousel {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-}
+} */
 
-.hero .carousel-inner, 
+/* .hero .carousel-inner, 
 .hero .carousel-item, 
 .hero .carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: blur(3px) brightness(75%); /* Reduce blur & make images clearer */
-}
+} */
 
 /* Text Overlay */
 .hero-content {
@@ -241,7 +236,34 @@ a {
     border-radius: 10px;
 }
 
+.swiper {
+    width: 100%;
+    height: 100%;
+}
 
+.swiper-slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    max-width: 80%;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+
+/* 
 
 $carousel-control-color:             $white;
 $carousel-control-width:             15%;
@@ -270,4 +292,4 @@ $carousel-control-next-icon-bg:      url("data:image/svg+xml,<svg xmlns='http://
 
 $carousel-transition-duration:       .6s;
 $carousel-transition:                transform $carousel-transition-duration ease-in-out; // Define transform transition first if using multiple transitions (e.g., `transform 2s ease, opacity .5s ease-out`)
-
+ */
