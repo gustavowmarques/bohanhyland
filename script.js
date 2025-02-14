@@ -171,6 +171,16 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.log("Mortgage calculator not found on this page. Skipping initialization.");
     }
+
+    const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        effect: "fade",
+    });
+    
 });
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -225,14 +235,4 @@ function checkout() {
     // Here, you would normally send the cart data to a server for payment processing.
 }
 
-document.addEventListener("DOMContentLoaded", displayCart);
-
-const swiper = new Swiper(".mySwiper", {
-    loop: true,
-    autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-    },
-    effect: "fade",
-});
 
