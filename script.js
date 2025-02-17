@@ -1,97 +1,81 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Script loaded successfully");
 
+    /* === Check Dependencies === */
     if (typeof bootstrap !== "undefined") {
         console.log("Bootstrap is loaded!");
     } else {
         console.error("Bootstrap is NOT loaded! The navbar might be affected.");
     }
 
-    // Ensure navbar elements exist
-    const navbar = document.querySelector(".navbar");
-    if (navbar) {
-        console.log("Navbar found in DOM.");
+    if (typeof Swiper !== "undefined") {
+        console.log("Swiper is loaded!");
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            effect: "fade",
+        });
     } else {
-        console.error("Navbar NOT found in DOM.");
+        console.error("Swiper is NOT loaded! Check if the script is included.");
     }
 
-    /* === User Authentication Logic === */
-    if (localStorage.getItem("loggedIn") === "true") {
-        showContent();
-    }
+    /* === Navbar Existence Check === */
+    const navbar = document.querySelector(".navbar");
+    navbar ? console.log("Navbar found in DOM.") : console.error("Navbar NOT found in DOM.");
 
+    /* === Authentication Logic === */
     function showContent() {
         const authSection = document.getElementById("auth");
         const contentSection = document.getElementById("content");
-
         if (authSection && contentSection) {
             authSection.style.display = "none";
             contentSection.style.display = "block";
         }
     }
-
-    function displayMessage(message) {
-        const messageElement = document.getElementById("message");
-        if (messageElement) {
-            messageElement.textContent = message;
-        }
+    
+    if (localStorage.getItem("loggedIn") === "true") {
+        showContent();
     }
 
-    // === Back to Top Button Logic ===
+    /* === Back to Top Button === */
     const backToTopBtn = document.getElementById("backToTopBtn");
-
     if (backToTopBtn) {
-        console.log("Back to Top button found");
-
         window.addEventListener("scroll", function () {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add("show");
-            } else {
-                backToTopBtn.classList.remove("show");
-            }
+            backToTopBtn.classList.toggle("show", window.scrollY > 300);
         });
-
         backToTopBtn.addEventListener("click", function () {
-            console.log("Back to Top button clicked");
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
-    } else {
-        console.error("Error: #backToTopBtn not found!");
     }
 
-    // === Property Listings Filtering Logic ===
+    /* === Property Listings Filtering === */
     const properties = [
-        { id: 1, name: "Luxury Apartment", location: "dublin", price: 500000, img: "./Images/luxury.jpg" },
-        { id: 2, name: "Cozy House", location: "galway", price: 350000, img: "./Images/cozy.jpg" },
-        { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./Images/modernCondo.jpg" },
-        { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./Images/limerickcity.jpg" },
-        { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./Images/galwaycountry.jpg" },
-        { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./Images/donegalold.jpg" },
+        { id: 1, name: "Luxury Apartment", location: "dublin", price: 500000, img: "./images/luxury.jpg" },
+        { id: 2, name: "Cozy House", location: "galway", price: 350000, img: "./images/cozy.jpg" },
+        { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./images/modernCondo.jpg" },
+        { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./images/limerickcity.jpg" },
+        { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./images/galwaycountry.jpg" },
+        { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./images/donegalold.jpg" },
     ];
 
     function displayProperties(filteredProperties) {
         const propertyList = document.getElementById("property-list") || document.getElementById("lettings-list");
         if (propertyList) {
-            propertyList.innerHTML = "";
-            filteredProperties.forEach(property => {
-                const propertyCard = `
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <img src="${property.img}" class="card-img-top" alt="${property.name}">
-                            <div class="card-body">
-                                <h5 class="card-title">${property.name}</h5>
-                                <p class="card-text">Location: ${property.location}</p>
-                                <p class="card-text">Price: €${property.price.toLocaleString()}</p>
-                            </div>
+            propertyList.innerHTML = filteredProperties.map(property => `
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="${property.img}" class="card-img-top" alt="${property.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${property.name}</h5>
+                            <p class="card-text">Location: ${property.location}</p>
+                            <p class="card-text">Price: €${property.price.toLocaleString()}</p>
                         </div>
                     </div>
-                `;
-                propertyList.innerHTML += propertyCard;
-            });
+                </div>
+            `).join("");
         }
     }
     
-
     const applyFiltersBtn = document.getElementById("apply-filters");
     if (applyFiltersBtn) {
         applyFiltersBtn.addEventListener("click", () => {
@@ -105,18 +89,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (maxPrice) {
                 filtered = filtered.filter(p => p.price <= maxPrice);
             }
-
             displayProperties(filtered);
         });
-
-        // Initial display of properties
         displayProperties(properties);
     }
 
-    // === Mortgage Calculator Logic (Only Runs on Pages that Contain It) ===
+    /* === Mortgage Calculator === */
     if (document.getElementById("mortgage-form")) {
-        console.log("Mortgage calculator found. Initializing...");
-
+        console.log("Initializing Mortgage Calculator...");
         const amountInput = document.getElementById("amount-input");
         const interestRateInput = document.getElementById("interest-rate-input");
         const lengthOfLoanInput = document.getElementById("length-of-loan-input");
@@ -124,115 +104,45 @@ document.addEventListener("DOMContentLoaded", function () {
         const resetBtn = document.getElementById("reset-btn");
         const mortgageFinalResult = document.getElementById("mortgage-final-result");
 
-        if (amountInput && interestRateInput && lengthOfLoanInput && calculateBtn && resetBtn && mortgageFinalResult) {
-            function calculateMortgagePayment() {
-                const borrowedMoney = parseFloat(amountInput.value);
-                const lengthOfLoan = parseInt(lengthOfLoanInput.value) * 12; // Convert years to months
-                const interestRate = parseFloat(interestRateInput.value);
+        function calculateMortgagePayment() {
+            const borrowedMoney = parseFloat(amountInput.value);
+            const lengthOfLoan = parseInt(lengthOfLoanInput.value) * 12;
+            const interestRate = parseFloat(interestRateInput.value) / 100 / 12;
+            const exponentiationOperator = (1 + interestRate) ** lengthOfLoan;
+            const monthlyPayment = (borrowedMoney * interestRate * exponentiationOperator) / (exponentiationOperator - 1);
 
-                if (isNaN(borrowedMoney) || isNaN(lengthOfLoan) || isNaN(interestRate)) {
-                    mortgageFinalResult.textContent = "Please enter valid numbers!";
-                    mortgageFinalResult.classList.add("error-message");
-                    return;
-                }
-
-                const calculatedInterest = interestRate / 100;
-                const interestReady = calculatedInterest / 12;
-                const exponentiationOperator = (1 + interestReady) ** lengthOfLoan;
-                const monthlyPayment = (borrowedMoney * interestReady * exponentiationOperator) / (exponentiationOperator - 1);
-
-                mortgageFinalResult.textContent = `🧮 Your monthly mortgage payment will be: €${monthlyPayment.toFixed(2)}`;
-                mortgageFinalResult.classList.add("success-message");
-                calculateBtn.classList.add("form-success");
-                calculateBtn.setAttribute("disabled", "disabled");
-                resetBtn.style.display = "block";
-            }
-
-            calculateBtn.addEventListener("click", function () {
-                if (amountInput.validity.valid && interestRateInput.validity.valid && lengthOfLoanInput.validity.valid) {
-                    calculateMortgagePayment();
-                } else {
-                    mortgageFinalResult.textContent = "There is an error in the form, please check it! 😥";
-                    mortgageFinalResult.classList.add("error-message");
-                    calculateBtn.classList.add("form-error");
-                }
-            });
-
-            resetBtn.addEventListener("click", function () {
-                resetBtn.style.display = "none";
-                mortgageFinalResult.textContent = "";
-                calculateBtn.removeAttribute("disabled");
-                calculateBtn.classList.remove("form-success");
-            });
-
-        } else {
-            console.error("Error: One or more mortgage calculator elements are missing in the DOM!");
+            mortgageFinalResult.textContent = `🧮 Your monthly mortgage payment: €${monthlyPayment.toFixed(2)}`;
         }
-    } else {
-        console.log("Mortgage calculator not found on this page. Skipping initialization.");
+        
+        calculateBtn.addEventListener("click", calculateMortgagePayment);
+        resetBtn.addEventListener("click", function () {
+            resetBtn.style.display = "none";
+            mortgageFinalResult.textContent = "";
+        });
     }
 
-    const swiper = new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        effect: "fade",
+    /* === Contact Form === */
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (this.checkValidity()) {
+                new bootstrap.Modal(document.getElementById("exampleModal")).show();
+                this.reset();
+            } else {
+                this.reportValidity();
+            }
+        });
     });
-    
+
+    /* === Cart Functionality === */
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    function displayCart() {
+        const cartItems = document.getElementById("cart-items");
+        const cartTotal = document.getElementById("cart-total");
+        if (cartItems && cartTotal) {
+            cartItems.innerHTML = cart.map(item => `<li>${item.name} - €${item.price} x ${item.quantity}</li>`).join("");
+            cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        }
+    }
+    displayCart();
 });
-
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-function addToCart(id, name, price) {
-    let product = cart.find(item => item.id === id);
-    
-    if (product) {
-        product.quantity += 1;
-    } else {
-        cart.push({ id, name, price, quantity: 1 });
-    }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    displayCart();
-}
-
-function displayCart() {
-    let cartItems = document.getElementById("cart-items");
-    let cartTotal = document.getElementById("cart-total");
-    
-    if (!cartItems || !cartTotal){
-        console.warn("Cart elements not found on this page. Skipping displayCart().");
-        return;
-    }
-    cartItems.innerHTML = "";
-    let total = 0;
-
-    cart.forEach(item => {
-        let li = document.createElement("li");
-        li.innerHTML = `${item.name} - €${item.price} x ${item.quantity} 
-                        <button onclick="removeFromCart(${item.id})">Remove</button>`;
-        cartItems.appendChild(li);
-        total += item.price * item.quantity;
-    });
-
-    cartTotal.textContent = total;
-}
-
-function removeFromCart(id) {
-    cart = cart.filter(item => item.id !== id);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    displayCart();
-}
-
-function checkout() {
-    if (cart.length === 0) {
-        alert("Your cart is empty.");
-        return;
-    }
-    alert("Proceeding to checkout...");
-    // Here, you would normally send the cart data to a server for payment processing.
-}
-
-

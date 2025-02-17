@@ -1,0 +1,327 @@
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Script loaded successfully");
+
+    if (typeof bootstrap !== "undefined") {
+        console.log("Bootstrap is loaded!");
+    } else {
+        console.error("Bootstrap is NOT loaded! The navbar might be affected.");
+    }
+
+    // Ensure navbar elements exist
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+        console.log("Navbar found in DOM.");
+    } else {
+        console.error("Navbar NOT found in DOM.");
+    }
+
+    /* === User Authentication Logic === */
+    if (localStorage.getItem("loggedIn") === "true") {
+        showContent();
+    }
+
+    function showContent() {
+        const authSection = document.getElementById("auth");
+        const contentSection = document.getElementById("content");
+
+        if (authSection && contentSection) {
+            authSection.style.display = "none";
+            contentSection.style.display = "block";
+        }
+    }
+
+    function displayMessage(message) {
+        const messageElement = document.getElementById("message");
+        if (messageElement) {
+            messageElement.textContent = message;
+        }
+    }
+
+    // === Back to Top Button Logic ===
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (backToTopBtn) {
+        console.log("Back to Top button found");
+
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+        backToTopBtn.addEventListener("click", function () {
+            console.log("Back to Top button clicked");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    } else {
+        console.error("Error: #backToTopBtn not found!");
+    }
+
+    // === Property Listings Filtering Logic ===
+    const properties = [
+        { id: 1, name: "Luxury Apartment", location: "dublin", price: 500000, img: "./images/luxury.jpg" },
+        { id: 2, name: "Cozy House", location: "galway", price: 350000, img: "./images/cozy.jpg" },
+        { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./images/modernCondo.jpg" },
+        { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./images/limerickcity.jpg" },
+        { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./images/galwaycountry.jpg" },
+        { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./images/donegalold.jpg" },
+    ];
+
+    function displayProperties(filteredProperties) {
+        const propertyList = document.getElementById("property-list") || document.getElementById("lettings-list");
+        if (propertyList) {
+            propertyList.innerHTML = "";
+            filteredProperties.forEach(property => {
+                const propertyCard = `
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="${property.img}" class="card-img-top" alt="${property.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${property.name}</h5>
+                                <p class="card-text">Location: ${property.location}</p>
+                                <p class="card-text">Price: €${property.price.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                propertyList.innerHTML += propertyCard;
+            });
+        }
+    }
+    
+
+    const applyFiltersBtn = document.getElementById("apply-filters");
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener("click", () => {
+            const selectedLocation = document.getElementById("filter-location").value;
+            const maxPrice = document.getElementById("filter-price").value;
+            let filtered = properties;
+
+            if (selectedLocation !== "all") {
+                filtered = filtered.filter(p => p.location === selectedLocation);
+            }
+            if (maxPrice) {
+                filtered = filtered.filter(p => p.price <= maxPrice);
+            }
+
+            displayProperties(filtered);
+        });
+
+        // Initial display of properties
+        displayProperties(properties);
+    }
+
+    // === Mortgage Calculator Logic (Only Runs on Pages that Contain It) ===
+    if (document.getElementById("mortgage-form")) {
+        console.log("Mortgage calculator found. Initializing...");
+
+        const amountInput = document.getElementById("amount-input");
+        const interestRateInput = document.getElementById("interest-rate-input");
+        const lengthOfLoanInput = document.getElementById("length-of-loan-input");
+        const calculateBtn = document.getElementById("calculate-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const mortgageFinalResult = document.getElementById("mortgage-final-result");
+
+        if (amountInput && interestRateInput && lengthOfLoanInput && calculateBtn && resetBtn && mortgageFinalResult) {
+            function calculateMortgagePayment() {
+                const borrowedMoney = parseFloat(amountInput.value);
+                const lengthOfLoan = parseInt(lengthOfLoanInput.value) * 12; // Convert years to months
+                const interestRate = parseFloat(interestRateInput.value);
+
+                if (isNaN(borrowedMoney) || isNaN(lengthOfLoan) || isNaN(interestRate)) {
+                    mortgageFinalResult.textContent = "Please enter valid numbers!";
+                    mortgageFinalResult.classList.add("error-message");
+                    return;
+                }
+
+                const calculatedInterest = interestRate / 100;
+                const interestReady = calculatedInterest / 12;
+                const exponentiationOperator = (1 + interestReady) ** lengthOfLoan;
+                const monthlyPayment = (borrowedMoney * interestReady * exponentiationOperator) / (exponentiationOperator - 1);
+
+                mortgageFinalResult.textContent = `🧮 Your monthly mortgage payment will be: €${monthlyPayment.toFixed(2)}`;
+                mortgageFinalResult.classList.add("success-message");
+                calculateBtn.classList.add("form-success");
+                calculateBtn.setAttribute("disabled", "disabled");
+                resetBtn.style.display = "block";
+            }
+
+            calculateBtn.addEventListener("click", function () {
+                if (amountInput.validity.valid && interestRateInput.validity.valid && lengthOfLoanInput.validity.valid) {
+                    calculateMortgagePayment();
+                } else {
+                    mortgageFinalResult.textContent = "There is an error in the form, please check it! 😥";
+                    mortgageFinalResult.classList.add("error-message");
+                    calculateBtn.classList.add("form-error");
+                }
+            });
+
+            resetBtn.addEventListener("click", function () {
+                resetBtn.style.display = "none";
+                mortgageFinalResult.textContent = "";
+                calculateBtn.removeAttribute("disabled");
+                calculateBtn.classList.remove("form-success");
+            });
+
+        } else {
+            console.error("Error: One or more mortgage calculator elements are missing in the DOM!");
+        }
+    } else {
+        console.log("Mortgage calculator not found on this page. Skipping initialization.");
+    }
+
+    const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        effect: "fade",
+    });
+
+    const contactForm = document.getElementById("contactForm");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            if (this.checkValidity()) {
+                // If form is valid, show Bootstrap modal
+                const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+                modal.show();
+                this.reset(); // Reset the form after submission
+            } else {
+                // Trigger HTML5 validation messages
+                this.reportValidity();
+            }
+        });
+    }
+  
+    
+    // Handle Contact Form Submission with Bootstrap Modal
+  const contactUsForm = document.getElementById("contactUsForm");
+  if (contactUsForm) {
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      if (this.checkValidity()) {
+        // If form is valid, show Bootstrap modal
+        const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+        modal.show();
+        this.reset(); // Reset the form after submission
+      } else {
+        // Trigger HTML5 validation messages
+        this.reportValidity();
+      }
+    });
+  }
+    // Show/Hide Password Toggle
+  const showPasswordCheckbox = document.getElementById("showPassword");
+  if (showPasswordCheckbox) {
+    showPasswordCheckbox.addEventListener("change", function () {
+      const passwordField = document.getElementById("password");
+      passwordField.type = this.checked ? "text" : "password";
+    });
+  }
+
+  // Redirect if already logged in
+  if (localStorage.getItem("loggedIn") === "true") {
+    window.location.href = "membersPortal.html";
+  }
+
+  // Login Function
+  window.login = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (email && password) {
+      const storedPassword = localStorage.getItem(email);
+
+      if (storedPassword === password) {
+        localStorage.setItem("loggedIn", "true");
+        displayMessage("Login successful! Redirecting...");
+        setTimeout(() => {
+          window.location.href = "membersPortal.html";
+        }, 1000);
+      } else {
+        displayMessage("Invalid email or password.");
+      }
+    } else {
+      displayMessage("Please fill in all fields.");
+    }
+  };
+
+  // Logout Function
+  window.logout = function () {
+    localStorage.setItem("loggedIn", "false");
+    displayMessage("You have logged out.");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1000);
+  };
+
+  // Display Message Function
+  function displayMessage(message) {
+    const messageElement = document.getElementById("message");
+    if (messageElement) {
+      messageElement.textContent = message;
+    }
+  }
+
+    
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function addToCart(id, name, price) {
+    let product = cart.find(item => item.id === id);
+    
+    if (product) {
+        product.quantity += 1;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+}
+
+function displayCart() {
+    let cartItems = document.getElementById("cart-items");
+    let cartTotal = document.getElementById("cart-total");
+    
+    if (!cartItems || !cartTotal){
+        console.warn("Cart elements not found on this page. Skipping displayCart().");
+        return;
+    }
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.innerHTML = `${item.name} - €${item.price} x ${item.quantity} 
+                        <button onclick="removeFromCart(${item.id})">Remove</button>`;
+        cartItems.appendChild(li);
+        total += item.price * item.quantity;
+    });
+
+    cartTotal.textContent = total;
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+    alert("Proceeding to checkout...");
+    // Here, you would normally send the cart data to a server for payment processing.
+}
+
+

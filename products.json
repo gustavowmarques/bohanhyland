@@ -3,18 +3,18 @@
         "id": 1,
         "name": "Fob",
         "price": 45,
-        "image": "Images/fob.png"
+        "image": "images/fob.png"
     },
     {
         "id": 2,
         "name": "Key",
         "price": 5,
-        "image": "Images/keys.png"
+        "image": "images/keys.png"
     },
     {
         "id": 3,
         "name": "Zapper",
         "price": 85,
-        "image": "Images/zapper.png"
+        "image": "images/zapper.png"
     }
 ]

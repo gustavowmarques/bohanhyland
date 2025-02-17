@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Bohan Hyland - Members Portal</title>
+      <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+      <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+      <!-- Navigation Bar -->
+      <nav class="navbar navbar-expand-lg navbar-custom py-3">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="images/logo.png" alt="Logo" width="70" height="40" class="me-2">
+            <span class="text-white">Bohan Hyland</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about-us.html">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login.html">Members Portal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                  <li><a class="dropdown-item" href="residential-sales.html">Residential Sales</a></li>
+                  <li><a class="dropdown-item" href="lettings.html">Lettings</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+                                      
+      <!-- Members Portal Content -->
+      <section class="py-5">
+        <div class="container">
+          <section id="portal" class="py-5 bg-primary text-white">
+            <div class="container text-center">
+              <h2 class="mb-4">Members Portal</h2>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">Order Access Devices</h5>
+                      <p class="card-text">Members can easily order Fobs, Zappers, and other access devices.</p>
+                      <a href="order.html" class="btn btn-primary">Order Now</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">Request MUD Reports</h5>
+                      <p class="card-text">Access detailed MUD reports for your property management needs.</p>
+                      <a href="mud.html" class="btn btn-primary">Request Report</a>
+                    </div>
+                  </div>
+                </div>
+                  <div class="col-md-6">
+                    <div class="card shadow-sm">
+                      <div class="card-body">
+                        <h5 class="card-title text-primary">Log An Issue</h5>
+                        <p class="card-text">General Maintenance, Leaks and Concerns.</p>
+                        <a href="issuelog.html" class="btn btn-primary">Log Issue</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card shadow-sm">
+                      <div class="card-body">
+                        <h5 class="card-title text-primary">Service Charge Account</h5>
+                        <p class="card-text">Log in to your myblockman account</p>
+                        <a href="https://bohanhyland.myblockman.ie/login" class="btn btn-primary" target="_blank">Log in</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </section>
+              <p id="orderMessage" class="text-center mt-3"></p>
+              <div class="text-center mt-4">
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+              </div>
+        </div>
+      </section>
+      <!-- Back to Top Button -->
+      <button id="backToTopBtn" class="back-to-top" tittle="Go to top">
+        <img src="images/top.png" alt="Back to Top">
+      </button>
+      <!-- Footer -->
+      <footer class="footer-custom py-4">
+        <div class="container text-center">
+          <p>&copy; 2025 Bohan Hyland. All Rights Reserved.</p>
+        </div>
+      </footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        function orderItem(item) {
+          document.getElementById("orderMessage").textContent = `You have ordered a ${item}. Our team will contact you soon.`;
+        }
+                                                                                  
+        function logout() {
+          localStorage.setItem("loggedIn", "false");
+          window.location.href = "login.html";
+        }
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+      <script src="script.js"></script>
+    </body>
+  </html>
+                                                                              
