@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: 1, name: "Luxury Apartment", location: "dublin", price: 500000, img: "./images/luxury.jpg" },
         { id: 2, name: "Cozy House", location: "galway", price: 350000, img: "./images/cozy.jpg" },
         { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./images/modernCondo.jpg" },
-        { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./images/limerickcity.jpg" },
-        { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./images/galwaycountry.jpg" },
-        { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./images/donegalold.jpg" },
+        { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./images/limerick-city.jpg" },
+        { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./images/galway-county.jpg" },
+        { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./images/donegal-old.jpg" },
     ];
 
     function displayProperties(filteredProperties) {
@@ -133,16 +133,99 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
-    /* === Cart Functionality === */
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    function displayCart() {
-        const cartItems = document.getElementById("cart-items");
-        const cartTotal = document.getElementById("cart-total");
-        if (cartItems && cartTotal) {
-            cartItems.innerHTML = cart.map(item => `<li>${item.name} - €${item.price} x ${item.quantity}</li>`).join("");
-            cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        }
-    }
-    displayCart();
 });
+
+// Function to show a floating notification when an item is added
+function showNotification(message) {
+    const notification = document.getElementById("cart-notification");
+    if (!notification) return; // Prevent errors if element is missing
+
+    notification.textContent = message;
+    notification.style.display = "block";
+    notification.style.opacity = "1";
+    notification.classList.add("show"); // Add a visible class
+
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+            notification.classList.remove("show"); // Remove class
+        }, 500);
+    }, 2000);
+}
+
+
+
+// Updated addToCart function
+function addToCart(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Check if item exists, increase quantity instead of duplicating
+    const existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart)); // Save to local storage
+    displayCart(); // Refresh cart UI
+    showNotification(`${name} added to cart!`); // Show message
+}
+
+// Function to remove an item from the cart
+function removeFromCart(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Find the item and decrease the quantity, or remove if quantity is 1
+    const updatedCart = cart.map(item => {
+        if (item.id === id) {
+            if (item.quantity > 1) {
+                item.quantity -= 1;
+                return item;
+            } else {
+                return null; // Mark for removal
+            }
+        }
+        return item;
+    }).filter(item => item !== null); // Remove marked items
+
+    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Save updated cart
+    displayCart(); // Refresh cart display
+}
+
+
+
+// Function to display cart items in the modal
+function displayCart() {
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cartItems && cartTotal) {
+        cartItems.innerHTML = cart.length
+            ? cart.map(item => `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${item.name} - €${item.price} x ${item.quantity}
+                    <button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button>
+                </li>
+            `).join("")
+            : `<li class="list-group-item">Your cart is empty</li>`;
+
+        cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    }
+
+    // Add event listeners to remove buttons dynamically
+    document.querySelectorAll(".remove-item").forEach(button => {
+        button.addEventListener("click", function () {
+            removeFromCart(parseInt(this.dataset.id));
+        });
+    });
+}
+
+
+
+
+
+
