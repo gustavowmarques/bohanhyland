@@ -135,6 +135,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+const contactForm = document.getElementById("contactUsForm");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const messageInput = document.getElementById("message");
+    const submitButton = contactForm.querySelector("button[type='submit']");
+
+    // Function to check if form is valid
+    function validateForm() {
+        const isValid = contactForm.checkValidity(); // HTML5 form validation
+        submitButton.disabled = !isValid; // Enable/disable submit button based on validity
+    }
+
+    // Real-time validation on input
+    [nameInput, emailInput, messageInput].forEach(input => {
+        input.addEventListener("input", validateForm);
+    });
+
+    // Prevent submission if form is invalid
+    contactForm.addEventListener("submit", function (event) {
+        if (!contactForm.checkValidity()) {
+            event.preventDefault(); // Stop form submission if invalid
+            contactForm.classList.add("was-validated"); // Bootstrap visual validation
+        }
+    });
+
+    // Disable submit button on page load
+    submitButton.disabled = true;
+
 // Function to show a floating notification when an item is added
 function showNotification(message) {
     const notification = document.getElementById("cart-notification");
