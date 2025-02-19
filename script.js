@@ -153,8 +153,48 @@ function showNotification(message) {
         }, 500);
     }, 2000);
 }
-
-
+function registerUser() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    
+    if (email && password) {
+    if (localStorage.getItem(email)) {
+    displayMessage("User already exists! Please log in.");
+    } else {
+    localStorage.setItem(email, password);
+    displayMessage("Registration successful! Redirecting to login...");
+    setTimeout(() => {
+    window.location.href = "login.html";
+    }, 1000);
+    }
+    } else {
+    displayMessage("Please fill in all fields.");
+    }
+    }
+    
+    function displayMessage(message) {
+    document.getElementById("message").textContent = message;
+    }
+    function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+    
+        if (email && password) {
+            const storedPassword = localStorage.getItem(email);
+            if (storedPassword && storedPassword === password) {
+                localStorage.setItem("loggedIn", "true");
+                displayMessage("Login successful! Redirecting...");
+                setTimeout(() => {
+                    window.location.href = "members-portal.html";
+                }, 1000);
+            } else {
+                displayMessage("Invalid email or password.");
+            }
+        } else {
+            displayMessage("Please fill in all fields.");
+        }
+    }
+    
 
 // Updated addToCart function
 function addToCart(id, name, price) {
