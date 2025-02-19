@@ -270,7 +270,7 @@ a {
     padding: 80px 0; 
     color: white; 
 }
-#contactUsForm, #authForm, #registerForm{
+#contactUsForm, #authForm, #registerForm, #contactForm{
     color: gray;
 }
 /* #contact::before {
