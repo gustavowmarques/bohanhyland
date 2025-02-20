@@ -133,35 +133,34 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-});
+
 
 const contactForm = document.getElementById("contactUsForm");
+
+if (contactForm) {  // ✅ Only runs if the form exists
     const nameInput = document.getElementById("name");
     const emailInput = document.getElementById("email");
     const messageInput = document.getElementById("message");
     const submitButton = contactForm.querySelector("button[type='submit']");
 
-    // Function to check if form is valid
     function validateForm() {
-        const isValid = contactForm.checkValidity(); // HTML5 form validation
-        submitButton.disabled = !isValid; // Enable/disable submit button based on validity
+        const isValid = contactForm.checkValidity();
+        submitButton.disabled = !isValid;
     }
 
-    // Real-time validation on input
     [nameInput, emailInput, messageInput].forEach(input => {
         input.addEventListener("input", validateForm);
     });
 
-    // Prevent submission if form is invalid
     contactForm.addEventListener("submit", function (event) {
         if (!contactForm.checkValidity()) {
-            event.preventDefault(); // Stop form submission if invalid
-            contactForm.classList.add("was-validated"); // Bootstrap visual validation
+            event.preventDefault();
+            contactForm.classList.add("was-validated");
         }
     });
 
-    // Disable submit button on page load
     submitButton.disabled = true;
+}
 
 // Function to show a floating notification when an item is added
 function showNotification(message) {
@@ -262,8 +261,78 @@ function removeFromCart(id) {
     displayCart(); // Refresh cart display
 }
 
+function setupIssueForm(formId, fieldIds) {
+    const issueForm = document.getElementById(formId);
+    if (!issueForm) return;
 
+    console.log(`✅ Initializing validation for form: ${formId}`);
 
+    // Fetch all input fields safely
+    const issueName = issueForm.querySelector(`#${fieldIds.name}`) || null;
+    const issueEmail = issueForm.querySelector(`#${fieldIds.email}`) || null;
+    const propertyAddress = issueForm.querySelector(`#${fieldIds.propertyAddress}`) || null;
+    const issueDetails = issueForm.querySelector(`#${fieldIds.issueDetails}`) || null;
+    const issueProfileType = issueForm.querySelector(`#${fieldIds.issueProfileType}`) || null;
+    const issueSubmitButton = issueForm.querySelector("button[type='submit']");
+
+    if (!issueSubmitButton) {
+        console.error(`🚨 Error: Submit button not found in '${formId}'.`);
+        return;
+    }
+
+    console.log("✅ Found all form fields. Adding validation listeners...");
+
+    // Function to check form validity
+    function validateIssueForm() {
+        const isValid = issueForm.checkValidity();
+        issueSubmitButton.disabled = !isValid;
+    }
+
+    // Apply validation only if fields exist
+    [issueName, issueEmail, propertyAddress, issueDetails, issueProfileType].forEach(input => {
+        if (input) {
+            input.addEventListener("input", validateIssueForm);
+            input.addEventListener("change", validateIssueForm);
+        } else {
+            console.warn(`⚠️ Warning: Expected field missing in '${formId}'. Check HTML.`);
+        }
+    });
+
+    // Prevent default submission & show confirmation message
+    issueForm.addEventListener("submit", function (event) {
+        if (!issueForm.checkValidity()) {
+            event.preventDefault();
+            issueForm.classList.add("was-validated");
+        } else {
+            event.preventDefault();
+            console.log("✅ Form submitted successfully!");
+            issueForm.reset();
+            issueSubmitButton.disabled = true;
+        }
+    });
+
+    // Disable submit button on page load
+    issueSubmitButton.disabled = true;
+}
+
+// ✅ Apply validation to both forms
+setupIssueForm("issueLogForm", {
+    name: "name",
+    email: "email",
+    propertyAddress: "property-address",
+    issueDetails: "issue-details",
+    issueProfileType: "specificSizeSelect"
+});
+
+setupIssueForm("imagemudContactForm", {
+    name: "name",
+    email: "email",
+    propertyAddress: "property-address",
+    issueDetails: "issue-details",
+    issueProfileType: "specificSizeSelect"
+});
+
+});
 // Function to display cart items in the modal
 function displayCart() {
     const cartItems = document.getElementById("cart-items");
@@ -291,9 +360,3 @@ function displayCart() {
         });
     });
 }
-
-
-
-
-
-

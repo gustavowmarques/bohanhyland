@@ -49,38 +49,34 @@
       <section id="contact" class="py-5">
         <div class="container">
           <h2 class="text-center mb-4">Log An Issue</h2>
-          <form class="bg-white p-4 shadow-sm rounded mx-auto" style="max-width: 600px;" id="contactForm" novalidate>
+          <form id="issueLogForm" class="bg-white p-4 shadow-sm rounded mx-auto" style="max-width: 600px;" novalidate>
             <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" required minlength="5" maxlength="40" pattern="^[A-Za-z\s]+$" title="Only letters are allowed">
+                <label for="issueName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" required minlength="5" maxlength="40" pattern="^[A-Za-z\s]+$">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" required minlength="5" maxlength="40">
-            </div>
-            <br>
-            <div class="col-sm-3">
-              <label class="visually-hidden" for="specificSizeSelect">Preference</label>
-              <select class="form-select" id="specificSizeSelect">
-                <option selected>Profile type</option>
-                <option value="1">Owner</option>
-                <option value="2">Tenant</option>
-              </select>
-            </div>
-            <br>
-            <div class="mb-3">
-              <label for="message" class="form-label">Property Address</label>
-              <textarea class="form-control" id="message" rows="4" required minlength="5" maxlength="400"></textarea>
+                <label for="issueEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email" required minlength="5" maxlength="40">
             </div>
             <div class="mb-3">
-              <label for="message" class="form-label">Issue details</label>
-              <textarea class="form-control" id="message" rows="4" required minlength="5" maxlength="400"></textarea>
+                <label for="propertyAddress" class="form-label">Property Address</label>
+                <textarea class="form-control" id="property-address" rows="4" required minlength="5" maxlength="400"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="issueDetails" class="form-label">Issue Details</label>
+                <textarea class="form-control" id="issue-details" rows="4" required minlength="5" maxlength="400"></textarea>
             </div>
             <div class="col-sm-3">
-              <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+                <label for="issueProfileType">Profile Type</label>
+                <select class="form-select" id="issueProfileType">
+                    <option selected>Profile type</option>
+                    <option value="1">Owner</option>
+                    <option value="2">Tenant</option>
+                </select>
             </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-          </form>
+            <button type="submit" class="btn btn-primary">Report Issue</button>
+        </form>
+        
         </div>
       </section>
       <!-- Modal -->

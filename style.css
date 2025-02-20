@@ -249,9 +249,11 @@ a {
     background-position: center;
     background-repeat: no-repeat;
     padding: 80px 0; 
+}
+h2, h3, h5{
     color: white; 
 }
-#contactUsForm, #authForm, #registerForm, #contactForm{
+#contactUsForm, #authForm, #registerForm, #contactForm, #contact{
     color: gray;
 }
 
