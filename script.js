@@ -115,62 +115,95 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* === Register Form Validation === */
+    console.log("Script loaded successfully");
+
+    // Select registration form elements
     const registerForm = document.getElementById("registerForm");
-    if (registerForm) {
-        const registerPasswordInput = document.getElementById("password");
-        const confirmPasswordInput = document.getElementById("confirmPassword");
-        const registerEmailInput = document.getElementById("registerEmail");
-        const registerMessageBox = document.getElementById("registerMessage");
-        const registerButton = document.getElementById("registerButton");
-
-        function validateRegisterForm() {
-            const registerPasswordInput = document.getElementById("password");
-            const confirmPasswordInput = document.getElementById("confirmPassword");
-            const registerMessageBox = document.getElementById("registerMessage");
-            const registerButton = document.getElementById("registerButton");
-        
-            if (!registerPasswordInput || !confirmPasswordInput || !registerMessageBox || !registerButton) {
-                console.error("❌ Missing form elements in register.html. Check IDs!");
-                return;
-            }
-        
-            const passwordValue = registerPasswordInput.value.trim();
-            const confirmPasswordValue = confirmPasswordInput.value.trim();
-        
-            // Password strength check
-            if (passwordValue.length < 8) {
-                registerMessageBox.textContent = "❌ Password too weak (Must be at least 8 characters)";
-                registerMessageBox.style.color = "red";
-                registerButton.disabled = true;
-                return;
-            }
-        
-            // Password match check
-            if (passwordValue !== confirmPasswordValue) {
-                registerMessageBox.textContent = "❌ Passwords do not match!";
-                registerMessageBox.style.color = "red";
-                registerButton.disabled = true;
-                return;
-            }
-        
-            // If everything is correct, enable the register button
-            registerMessageBox.textContent = "";
-            registerButton.disabled = false;
-        }
-        
-
-        registerPasswordInput.addEventListener("input", validateRegisterForm);
-        confirmPasswordInput.addEventListener("input", validateRegisterForm);
-
-        registerForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            registerMessageBox.textContent = "✅ Registration successful!";
-            registerMessageBox.style.color = "green";
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1500);
-        });
+    if (!registerForm) {
+        console.error("❌ Register form not found in register.html!");
+        return; // Exit if the form does not exist
     }
+
+    const registerEmailInput = document.getElementById("registerEmail");
+    const registerPasswordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const registerMessageBox = document.getElementById("registerMessage");
+    const registerButton = document.getElementById("registerButton");
+
+    // Debugging logs to verify elements
+    console.log("📌 Checking if all required elements exist:");
+    console.log("registerEmailInput:", registerEmailInput);
+    console.log("registerPasswordInput:", registerPasswordInput);
+    console.log("confirmPasswordInput:", confirmPasswordInput);
+    console.log("registerMessageBox:", registerMessageBox);
+    console.log("registerButton:", registerButton);
+
+    if (!registerEmailInput || !registerPasswordInput || !confirmPasswordInput || !registerMessageBox || !registerButton) {
+        console.error("❌ One or more form elements are missing. Fix register.html IDs!");
+        return;
+    }
+
+    // Function to validate password strength and matching
+    function validateRegisterForm() {
+        const passwordValue = registerPasswordInput.value.trim();
+        const confirmPasswordValue = confirmPasswordInput.value.trim();
+
+        if (passwordValue.length < 8) {
+            registerMessageBox.textContent = "❌ Password too weak (Must be at least 8 characters)";
+            registerMessageBox.style.color = "red";
+            registerButton.disabled = true;
+            return;
+        }
+
+        if (passwordValue !== confirmPasswordValue) {
+            registerMessageBox.textContent = "❌ Passwords do not match!";
+            registerMessageBox.style.color = "red";
+            registerButton.disabled = true;
+            return;
+        }
+
+        registerMessageBox.textContent = "";
+        registerButton.disabled = false;
+    }
+
+    // Attach real-time validation
+    registerPasswordInput.addEventListener("input", validateRegisterForm);
+    confirmPasswordInput.addEventListener("input", validateRegisterForm);
+
+    // Handle form submission
+    registerForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent page refresh
+
+        if (!registerEmailInput || !registerPasswordInput || !confirmPasswordInput || !registerMessageBox || !registerButton) {
+            console.error("❌ Missing form elements. Cannot register user.");
+            return;
+        }
+
+        const email = registerEmailInput.value.trim();
+        const password = registerPasswordInput.value.trim();
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        // Check if user already exists
+        const existingUser = users.find(user => user.email === email);
+        if (existingUser) {
+            registerMessageBox.textContent = "❌ User already exists! Please log in.";
+            registerMessageBox.style.color = "red";
+            return;
+        }
+
+        // Save new user
+        users.push({ email, password });
+        localStorage.setItem("users", JSON.stringify(users));
+
+        registerMessageBox.textContent = "✅ Registration successful! Redirecting to login...";
+        registerMessageBox.style.color = "green";
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
+    });    
+    
 
     /* === Cart Functions === */
     function addToCart(id, name, price) {
