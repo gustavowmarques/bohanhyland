@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
             contentSection.style.display = "block";
         }
     }
-    
+
     if (localStorage.getItem("loggedIn") === "true") {
         showContent();
     }
@@ -46,52 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         backToTopBtn.addEventListener("click", function () {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
-    }
-
-    /* === Property Listings Filtering === */
-    const properties = [
-        { id: 1, name: "Luxury Apartment", location: "dublin", price: 500000, img: "./images/luxury.jpg" },
-        { id: 2, name: "Cozy House", location: "galway", price: 350000, img: "./images/cozy.jpg" },
-        { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./images/modern-condo.jpg" },
-        { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./images/limerick-city.jpg" },
-        { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./images/galway-county.jpg" },
-        { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./images/donegal-old.jpg" },
-    ];
-
-    function displayProperties(filteredProperties) {
-        const propertyList = document.getElementById("property-list") || document.getElementById("lettings-list");
-        if (propertyList) {
-            propertyList.innerHTML = filteredProperties.map(property => `
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img src="${property.img}" class="card-img-top" alt="${property.name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${property.name}</h5>
-                            <p class="card-text">Location: ${property.location}</p>
-                            <p class="card-text">Price: €${property.price.toLocaleString()}</p>
-                        </div>
-                    </div>
-                </div>
-            `).join("");
-        }
-    }
-    
-    const applyFiltersBtn = document.getElementById("apply-filters");
-    if (applyFiltersBtn) {
-        applyFiltersBtn.addEventListener("click", () => {
-            const selectedLocation = document.getElementById("filter-location").value;
-            const maxPrice = document.getElementById("filter-price").value;
-            let filtered = properties;
-
-            if (selectedLocation !== "all") {
-                filtered = filtered.filter(p => p.location === selectedLocation);
-            }
-            if (maxPrice) {
-                filtered = filtered.filter(p => p.price <= maxPrice);
-            }
-            displayProperties(filtered);
-        });
-        displayProperties(properties);
     }
 
     /* === Mortgage Calculator === */
@@ -113,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             mortgageFinalResult.textContent = `🧮 Your monthly mortgage payment: €${monthlyPayment.toFixed(2)}`;
         }
-        
+
         calculateBtn.addEventListener("click", calculateMortgagePayment);
         resetBtn.addEventListener("click", function () {
             resetBtn.style.display = "none";
@@ -134,229 +88,119 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    const contactForm = document.getElementById("contactUsForm");
+    if (contactForm) {
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const messageInput = document.getElementById("message");
+        const submitButton = contactForm.querySelector("button[type='submit']");
 
-const contactForm = document.getElementById("contactUsForm");
-
-if (contactForm) {  // ✅ Only runs if the form exists
-    const nameInput = document.getElementById("name");
-    const emailInput = document.getElementById("email");
-    const messageInput = document.getElementById("message");
-    const submitButton = contactForm.querySelector("button[type='submit']");
-
-    function validateForm() {
-        const isValid = contactForm.checkValidity();
-        submitButton.disabled = !isValid;
-    }
-
-    [nameInput, emailInput, messageInput].forEach(input => {
-        input.addEventListener("input", validateForm);
-    });
-
-    contactForm.addEventListener("submit", function (event) {
-        if (!contactForm.checkValidity()) {
-            event.preventDefault();
-            contactForm.classList.add("was-validated");
+        function validateForm() {
+            const isValid = contactForm.checkValidity();
+            submitButton.disabled = !isValid;
         }
-    });
 
-    submitButton.disabled = true;
-}
-
-// Function to show a floating notification when an item is added
-function showNotification(message) {
-    const notification = document.getElementById("cart-notification");
-    if (!notification) return; // Prevent errors if element is missing
-
-    notification.textContent = message;
-    notification.style.display = "block";
-    notification.style.opacity = "1";
-    notification.classList.add("show"); // Add a visible class
-
-    setTimeout(() => {
-        notification.style.opacity = "0";
-        setTimeout(() => {
-            notification.style.display = "none";
-            notification.classList.remove("show"); // Remove class
-        }, 500);
-    }, 2000);
-}
-function registerUser() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    
-    if (email && password) {
-    if (localStorage.getItem(email)) {
-    displayMessage("User already exists! Please log in.");
-    } else {
-    localStorage.setItem(email, password);
-    displayMessage("Registration successful! Redirecting to login...");
-    setTimeout(() => {
-    window.location.href = "login.html";
-    }, 1000);
-    }
-    } else {
-    displayMessage("Please fill in all fields.");
-    }
-    }
-    
-    function displayMessage(message) {
-    document.getElementById("message").textContent = message;
-    }
-    function login() {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-    
-        if (email && password) {
-            const storedPassword = localStorage.getItem(email);
-            if (storedPassword && storedPassword === password) {
-                localStorage.setItem("loggedIn", "true");
-                displayMessage("Login successful! Redirecting...");
-                setTimeout(() => {
-                    window.location.href = "members-portal.html";
-                }, 1000);
-            } else {
-                displayMessage("Invalid email or password.");
-            }
-        } else {
-            displayMessage("Please fill in all fields.");
-        }
-    }
-    
-
-// Updated addToCart function
-function addToCart(id, name, price) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    // Check if item exists, increase quantity instead of duplicating
-    const existingItem = cart.find(item => item.id === id);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({ id, name, price, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart)); // Save to local storage
-    displayCart(); // Refresh cart UI
-    showNotification(`${name} added to cart!`); // Show message
-}
-
-// Function to remove an item from the cart
-function removeFromCart(id) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    // Find the item and decrease the quantity, or remove if quantity is 1
-    const updatedCart = cart.map(item => {
-        if (item.id === id) {
-            if (item.quantity > 1) {
-                item.quantity -= 1;
-                return item;
-            } else {
-                return null; // Mark for removal
-            }
-        }
-        return item;
-    }).filter(item => item !== null); // Remove marked items
-
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Save updated cart
-    displayCart(); // Refresh cart display
-}
-
-function setupIssueForm(formId, fieldIds) {
-    const issueForm = document.getElementById(formId);
-    if (!issueForm) return;
-
-    console.log(`✅ Initializing validation for form: ${formId}`);
-
-    // Fetch all input fields safely
-    const issueName = issueForm.querySelector(`#${fieldIds.name}`) || null;
-    const issueEmail = issueForm.querySelector(`#${fieldIds.email}`) || null;
-    const propertyAddress = issueForm.querySelector(`#${fieldIds.propertyAddress}`) || null;
-    const issueDetails = issueForm.querySelector(`#${fieldIds.issueDetails}`) || null;
-    const issueProfileType = issueForm.querySelector(`#${fieldIds.issueProfileType}`) || null;
-    const issueSubmitButton = issueForm.querySelector("button[type='submit']");
-
-    if (!issueSubmitButton) {
-        console.error(`🚨 Error: Submit button not found in '${formId}'.`);
-        return;
-    }
-
-    console.log("✅ Found all form fields. Adding validation listeners...");
-
-    // Function to check form validity
-    function validateIssueForm() {
-        const isValid = issueForm.checkValidity();
-        issueSubmitButton.disabled = !isValid;
-    }
-
-    // Apply validation only if fields exist
-    [issueName, issueEmail, propertyAddress, issueDetails, issueProfileType].forEach(input => {
-        if (input) {
-            input.addEventListener("input", validateIssueForm);
-            input.addEventListener("change", validateIssueForm);
-        } else {
-            console.warn(`⚠️ Warning: Expected field missing in '${formId}'. Check HTML.`);
-        }
-    });
-
-    // Prevent default submission & show confirmation message
-    issueForm.addEventListener("submit", function (event) {
-        if (!issueForm.checkValidity()) {
-            event.preventDefault();
-            issueForm.classList.add("was-validated");
-        } else {
-            event.preventDefault();
-            console.log("✅ Form submitted successfully!");
-            issueForm.reset();
-            issueSubmitButton.disabled = true;
-        }
-    });
-
-    // Disable submit button on page load
-    issueSubmitButton.disabled = true;
-}
-
-// ✅ Apply validation to both forms
-setupIssueForm("issueLogForm", {
-    name: "name",
-    email: "email",
-    propertyAddress: "property-address",
-    issueDetails: "issue-details",
-    issueProfileType: "specificSizeSelect"
-});
-
-setupIssueForm("imagemudContactForm", {
-    name: "name",
-    email: "email",
-    propertyAddress: "property-address",
-    issueDetails: "issue-details",
-    issueProfileType: "specificSizeSelect"
-});
-
-});
-// Function to display cart items in the modal
-function displayCart() {
-    const cartItems = document.getElementById("cart-items");
-    const cartTotal = document.getElementById("cart-total");
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    if (cartItems && cartTotal) {
-        cartItems.innerHTML = cart.length
-            ? cart.map(item => `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    ${item.name} - €${item.price} x ${item.quantity}
-                    <button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button>
-                </li>
-            `).join("")
-            : `<li class="list-group-item">Your cart is empty</li>`;
-
-        cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    }
-
-    // Add event listeners to remove buttons dynamically
-    document.querySelectorAll(".remove-item").forEach(button => {
-        button.addEventListener("click", function () {
-            removeFromCart(parseInt(this.dataset.id));
+        [nameInput, emailInput, messageInput].forEach(input => {
+            input.addEventListener("input", validateForm);
         });
-    });
-}
+
+        contactForm.addEventListener("submit", function (event) {
+            if (!contactForm.checkValidity()) {
+                event.preventDefault();
+                contactForm.classList.add("was-validated");
+            }
+        });
+
+        submitButton.disabled = true;
+    }
+
+    /* === Register Form Validation === */
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+        const registerPasswordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const registerEmailInput = document.getElementById("registerEmail");
+        const registerMessageBox = document.getElementById("registerMessage");
+        const registerButton = document.getElementById("registerButton");
+
+        function validateRegisterForm() {
+            const registerPasswordInput = document.getElementById("password");
+            const confirmPasswordInput = document.getElementById("confirmPassword");
+            const registerMessageBox = document.getElementById("registerMessage");
+            const registerButton = document.getElementById("registerButton");
+        
+            if (!registerPasswordInput || !confirmPasswordInput || !registerMessageBox || !registerButton) {
+                console.error("❌ Missing form elements in register.html. Check IDs!");
+                return;
+            }
+        
+            const passwordValue = registerPasswordInput.value.trim();
+            const confirmPasswordValue = confirmPasswordInput.value.trim();
+        
+            // Password strength check
+            if (passwordValue.length < 8) {
+                registerMessageBox.textContent = "❌ Password too weak (Must be at least 8 characters)";
+                registerMessageBox.style.color = "red";
+                registerButton.disabled = true;
+                return;
+            }
+        
+            // Password match check
+            if (passwordValue !== confirmPasswordValue) {
+                registerMessageBox.textContent = "❌ Passwords do not match!";
+                registerMessageBox.style.color = "red";
+                registerButton.disabled = true;
+                return;
+            }
+        
+            // If everything is correct, enable the register button
+            registerMessageBox.textContent = "";
+            registerButton.disabled = false;
+        }
+        
+
+        registerPasswordInput.addEventListener("input", validateRegisterForm);
+        confirmPasswordInput.addEventListener("input", validateRegisterForm);
+
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            registerMessageBox.textContent = "✅ Registration successful!";
+            registerMessageBox.style.color = "green";
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
+        });
+    }
+
+    /* === Cart Functions === */
+    function addToCart(id, name, price) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingItem = cart.find(item => item.id === id);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ id, name, price, quantity: 1 });
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+    }
+
+    function displayCart() {
+        const cartItems = document.getElementById("cart-items");
+        const cartTotal = document.getElementById("cart-total");
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        if (cartItems && cartTotal) {
+            cartItems.innerHTML = cart.length
+                ? cart.map(item => `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${item.name} - €${item.price} x ${item.quantity}
+                        <button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remove</button>
+                    </li>
+                `).join("")
+                : `<li class="list-group-item">Your cart is empty</li>`;
+
+            cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        }
+    }
+});
