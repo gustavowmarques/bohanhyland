@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const properties = [
         { id: 1, name: "Luxury Apartment", location: "dublin", price: 500000, img: "./images/luxury.jpg" },
         { id: 2, name: "Cozy House", location: "galway", price: 350000, img: "./images/cozy.jpg" },
-        { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./images/modernCondo.jpg" },
+        { id: 3, name: "Modern Condo", location: "dublin", price: 420000, img: "./images/modern-condo.jpg" },
         { id: 4, name: "Luxury City Center", location: "limerick", price: 465000, img: "./images/limerick-city.jpg" },
         { id: 5, name: "Big country house in Galway", location: "galway", price: 350000, img: "./images/galway-county.jpg" },
         { id: 6, name: "Country House in Donegal", location: "donegal", price: 250000, img: "./images/donegal-old.jpg" },
