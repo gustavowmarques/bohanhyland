@@ -30,23 +30,25 @@ After hearing the ideas, my first step was to create the html pages that I knew 
 These are the pages:
   - Home Page (index.html)
   - About Us (about-us.html)
+  - Register Page (register.html)
+  - Login Page (login.html)
   - Members Portal  (members-portal)
-    - Register Page (register.html)
-    - Login Page (login.html)
     - Order Portal (order.html)
+    - Request MUD Reports (mud.html)
+    - Log Issue (issue.html) 
   - Contact Us (contact.html)
   - Services
-    - Residential Sales
-    - Lettings
+    - Residential Sales (residential-sales.html)
+    - Lettings (lettings.html)
 
 ### Wireframes
 Excalidraw's link can be accessed here: [Excalidraw's link](https://excalidraw.com/#json=e2UyGQrtRvkkZScG5V1UC,09xVhPQdw7xacjeUyUgHAw)
 
-![Home Page](/Project/documents/wireframes/home.png "Home Page's wireframe")
+![Home Page](/documents/wireframes/home.png "Home Page's wireframe")
 ![About Us](/Project/documents/wireframes/about.png "About Us' wireframe")
-![Member's Portal](/Project/documents/wireframes/members.png "Member's Portal")
 ![Register User](/Project/documents/wireframes/register.png "Register New Users")
 ![Login Page](/Project/documents/wireframes/login.png "Login Page's wireframe")
+![Member's Portal](/Project/documents/wireframes/members.png "Member's Portal")
 ![Orders Page](/Project/documents/wireframes/order.png "Orders Page's wireframe")
 ![Contact Us Page](/Project/documents/wireframes/contact.png "Contact US Page's wireframe")
 ![Residential Sales Page](/Project/documents/wireframes/sales.png "Residential Sales Page's wireframe")
@@ -55,7 +57,7 @@ Excalidraw's link can be accessed here: [Excalidraw's link](https://excalidraw.c
 ## Key Features
 
 ### 1. Semantic HTML Structure
-- **Multi-Section Layout:** The application is divided into clearly defined sections (home, about, interactive demo, contact) using semantic tags.
+- **Multi-Section Layout:** The application is divided into clearly defined sections (home, about, Members Portal, contact, and Services) using semantic tags.
 - **Consistent Navigation:** A persistent navigation bar allows easy access to all sections, ensuring an intuitive user flow.
 
 ### 2. Responsive CSS Styling
@@ -78,13 +80,17 @@ Excalidraw's link can be accessed here: [Excalidraw's link](https://excalidraw.c
 ## Project Structure
 
 The repository is organized as follows:
+  - **HTML files:** HTML files with semantic structure
+  - **style.css:** Custom CSS for styling and responsiveness
+  - **script.js:** JavaScript file containing interactive and DOM manipulating logic
+  - **README.md:** Project documentation (this file)
 
 
 ## Accessing the Hosted Project
 
 The project is hosted on GitHub Pages for easy access and evaluation. To view the live project:
 1. **Visit the GitHub Pages URL:**  
-   [https://gustavowmarques.github.io/bohanhyland/](https://gustavowmarques.github.io/bohanhyland/)
+   https://gustavowmarques.github.io/bohanhyland/
 2. **Clone the Repository:**  
    If you prefer to run the project locally, clone the repository using:
    ```bash
