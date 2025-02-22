@@ -266,7 +266,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Redirect to login page
         window.location.href = "login.html";
     }
+
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+    }
     
+    if (currentPage === "order.html") {
 
     /* === Cart Functions === */
     function addToCart(id, name, price) {
@@ -299,7 +305,64 @@ document.addEventListener("DOMContentLoaded", function () {
             cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
         }
     }
+
+    function removeItemFromCart(itemId) {
+        // Retrieve the current cart from localStorage
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        
+        // Remove the item with the matching id
+        cart = cart.filter(item => item.id !== parseInt(itemId));
+        
+        // Update the localStorage with the new cart array
+        localStorage.setItem("cart", JSON.stringify(cart));
+        
+        // Re-render the cart display to reflect the removal
+        displayCart();
+    }
+    
+// Select the parent element containing the cart items
+const cartItemsList = document.getElementById("cart-items");
+if (cartItemsList) {
+    // Attach a click event listener to the cart-items container
+    cartItemsList.addEventListener("click", function (e) {
+        // Check if the clicked element has the 'remove-item' class
+        if (e.target && e.target.classList.contains("remove-item")) {
+            // Retrieve the data-id attribute from the clicked button
+            const id = e.target.getAttribute("data-id");
+            // Call the function to remove the item from the cart
+            removeItemFromCart(id);
+        }
+    });
+}
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        const id = parseInt(this.getAttribute('data-id'));
+        const name = this.getAttribute('data-name');
+        const price = parseFloat(this.getAttribute('data-price'));
+        addToCart(id, name, price);
+    });
 });
+
+document.getElementById('checkout-btn').addEventListener('click', checkout);
+
+
+
+function checkout() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length > 0) {
+        // (Implement your checkout logic here. For now, we’ll simply clear the cart.)
+        localStorage.removeItem("cart");
+        displayCart(); // Update the cart display
+        alert("Checkout completed successfully!");
+    } else {
+        alert("Your cart is empty!");
+    }
+}
+}
+
+});
+
 function login() {
     // Get input values
     const emailInput = document.getElementById("email").value.trim();

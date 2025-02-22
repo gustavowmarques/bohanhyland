@@ -60,19 +60,19 @@
               <img src="images/fob.png" class="img-fluid w-100" alt="Fob">
               <h4>Key Fob</h4>
               <p>Price: €45</p>
-              <button class="btn btn-primary" onclick="addToCart(1, 'Key fob', 45)">Add to Cart</button>
+              <button class="btn btn-primary add-to-cart" data-id="1" data-name="Key fob" data-price="45">Add to Cart</button>
             </div>
             <div class="col-md-4 text-center product" data-id="2" data-name="Key" data-price="5">
               <img src="images/Keys.png" class="img-fluid w-100" alt="Key">
               <h4>Keys</h4>
               <p>Price: €5</p>
-              <button class="btn btn-primary" onclick="addToCart(2, 'Key', 5)">Add to Cart</button>
+              <button class="btn btn-primary add-to-cart" data-id="2" data-name="Key" data-price="5">Add to Cart</button>
             </div>
             <div class="col-md-4 text-center product" data-id="3" data-name="Zapper" data-price="85">
               <img src="images/zapper.png" class="img-fluid w-100" alt="Zapper">
               <h4>Zapper</h4>
               <p>Price: €85</p>
-              <button class="btn btn-primary" onclick="addToCart(3, 'Zapper', 85)">Add to Cart</button>
+              <button class="btn btn-primary add-to-cart" data-id="3" data-name="Zapper" data-price="85">Add to Cart</button>
             </div>
           </div>
           <!-- View Cart Button -->
@@ -81,7 +81,7 @@
           </button>
           <p id="orderMessage" class="text-center mt-3"></p>
           <div class="text-center mt-4">
-            <button class="btn btn-danger" onclick="logout()">Logout</button>
+            <button id="logout-btn" class="btn btn-danger">Logout</button>
           </div>
         </div>
       </section>
@@ -102,7 +102,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
-              <button onclick="checkout()" class="btn btn-primary">Proceed to Checkout</button>
+              <button id="checkout-btn" class="btn btn-primary">Proceed to Checkout</button>
             </div>
           </div>
         </div>
