@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("loggedIn") === "true") {
+        window.location.href = "members-portal.html";
+    }
+    
     console.log("Script loaded successfully");
 
     /* === Check Dependencies === */
@@ -203,6 +207,16 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "login.html";
         }, 1500);
     });    
+
+
+   
+    function logout() {
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("loggedInUser");
+    
+        // Redirect to login page
+        window.location.href = "login.html";
+    }
     
 
     /* === Cart Functions === */
@@ -235,5 +249,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
             cartTotal.textContent = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
         }
+    }
+});
+function login() {
+    // Get input values
+    const emailInput = document.getElementById("email").value.trim();
+    const passwordInput = document.getElementById("password").value.trim();
+    const message = document.getElementById("message");
+
+    // Retrieve stored users from localStorage
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check if credentials match
+    const validUser = users.find(user => user.email === emailInput && user.password === passwordInput);
+
+    if (validUser) {
+        // Store login state
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("loggedInUser", JSON.stringify(validUser));
+
+        message.textContent = "✅ Login successful! Redirecting...";
+        message.style.color = "green";
+
+        // Redirect to members-portal.html after delay
+        setTimeout(() => {
+            window.location.href = "members-portal.html";
+        }, 1500);
+    } else {
+        message.textContent = "❌ Invalid email or password!";
+        message.style.color = "red";
+    }
+}
+
+// Ensure script runs after DOM is loaded
+document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("loggedIn") === "true") {
+        window.location.href = "members-portal.html";
     }
 });
