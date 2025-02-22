@@ -45,14 +45,14 @@ These are the pages:
 Excalidraw's link can be accessed here: [Excalidraw's link](https://excalidraw.com/#json=e2UyGQrtRvkkZScG5V1UC,09xVhPQdw7xacjeUyUgHAw)
 
 ![Home Page](/documents/wireframes/home.png "Home Page's wireframe")
-![About Us](/Project/documents/wireframes/about.png "About Us' wireframe")
-![Register User](/Project/documents/wireframes/register.png "Register New Users")
-![Login Page](/Project/documents/wireframes/login.png "Login Page's wireframe")
-![Member's Portal](/Project/documents/wireframes/members.png "Member's Portal")
-![Orders Page](/Project/documents/wireframes/order.png "Orders Page's wireframe")
-![Contact Us Page](/Project/documents/wireframes/contact.png "Contact US Page's wireframe")
-![Residential Sales Page](/Project/documents/wireframes/sales.png "Residential Sales Page's wireframe")
-![Lettings Page](/Project/documents/wireframes/lettings.png "Lettings Page's wireframe")
+![About Us](/documents/wireframes/about.png "About Us' wireframe")
+![Register User](/documents/wireframes/register.png "Register New Users")
+![Login Page](/documents/wireframes/login.png "Login Page's wireframe")
+![Member's Portal](/documents/wireframes/members.png "Member's Portal")
+![Orders Page](/documents/wireframes/order.png "Orders Page's wireframe")
+![Contact Us Page](/documents/wireframes/contact.png "Contact US Page's wireframe")
+![Residential Sales Page](/documents/wireframes/sales.png "Residential Sales Page's wireframe")
+![Lettings Page](/documents/wireframes/lettings.png "Lettings Page's wireframe")
 
 ## Key Features
 
