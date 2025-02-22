@@ -285,6 +285,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         displayCart();
+    
+        // --- Show the Bootstrap Alert ---
+        const cartNotification = document.getElementById("cart-notification");
+        if (cartNotification) {
+            // Make the alert visible
+            cartNotification.style.display = "block";
+            
+            // Optionally, use a CSS transition or class if you prefer
+    
+            // Automatically hide the alert after 2 seconds (2000 milliseconds)
+            setTimeout(() => {
+                cartNotification.style.display = "none";
+            }, 2000);
+        }
+    
     }
 
     function displayCart() {
