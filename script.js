@@ -167,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* === Register Form Validation === */
+    if (currentPage === "register.html") {
     console.log("Script loaded successfully");
 
     // Select registration form elements
@@ -256,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1500);
     });    
 
-
+    }
    
     function logout() {
         localStorage.removeItem("loggedIn");
