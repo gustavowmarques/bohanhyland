@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (localStorage.getItem("loggedIn") === "true") {
-        window.location.href = "members-portal.html";
+    const currentPage = window.location.pathname.split("/").pop(); // Get the current page filename
+
+    if (currentPage === "login.html" && localStorage.getItem("loggedIn") === "true") {
+        window.location.href = "members-portal.html"; // Redirect only from the login page
     }
     
     console.log("Script loaded successfully");
@@ -281,12 +283,6 @@ function login() {
     }
 }
 
-// Ensure script runs after DOM is loaded
-document.addEventListener("DOMContentLoaded", function () {
-    if (localStorage.getItem("loggedIn") === "true") {
-        window.location.href = "members-portal.html";
-    }
-});
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Script loaded successfully");
 
