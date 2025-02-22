@@ -287,3 +287,22 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "members-portal.html";
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Script loaded successfully");
+
+    function togglePasswordVisibility(checkboxId, passwordFieldId) {
+        const checkbox = document.getElementById(checkboxId);
+        const passwordField = document.getElementById(passwordFieldId);
+
+        if (checkbox && passwordField) {
+            checkbox.addEventListener("change", function () {
+                passwordField.type = this.checked ? "text" : "password";
+            });
+        }
+    }
+
+    // Apply function to all password fields
+    togglePasswordVisibility("showPassword1", "password");       // Main password field (Register)
+    togglePasswordVisibility("showPassword2", "confirmPassword"); // Confirm Password (Register)
+    togglePasswordVisibility("showPassword3", "password");       // Password field (Login)
+});

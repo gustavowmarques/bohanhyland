@@ -70,9 +70,17 @@
             <input type="password" class="form-control" id="password" required minlength="8" maxlength="20" pattern="(?=.*[0-9])(?=.*[a-zA-Z]).*" title="Password must contain at least one letter and one number.">
             <div class="form-text">Must be 8-20 characters long, include at least one letter and one number.</div>
           </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="showPassword1">
+            <label class="form-check-label" for="showPassword1">Show Password</label>
+          </div>
           <div class="mb-3">
             <label for="confirmPassword" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirmPassword" required minlength="8" maxlength="20" pattern="(?=.*[0-9])(?=.*[a-zA-Z]).*" title="Password must contain at least one letter and one number.">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="showPassword2">
+            <label class="form-check-label" for="showPassword2">Show Password</label>
           </div>
           <button type="submit" class="btn btn-primary w-100" id="registerButton">Register</button>
           <p id="registerMessage" class="text-danger"></p>  
